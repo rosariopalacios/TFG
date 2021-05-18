@@ -6,7 +6,8 @@
       </div>
 
     <div class="optionButtons">
-      <button id="instrucciones" @click="showModal = true "> Instrucciones </button>
+      <CountDown :seconds="1200"/>
+        <button id="instrucciones" @click="showModal = true "> Instrucciones </button>
         <modal v-if="showModal" @close="showModal = false"/> 
         <button id="limpiar" @click="emptyMap"> Limpiar mapa </button>
         <button id="formulario" @click="continueToForm"> Enviar</button>
@@ -22,7 +23,7 @@
 <script>
 
 import mapSVG from '../Pages/MapSVG.vue';
-//import CountDown from '../Pages/CountDown.vue';
+import CountDown from '../Pages/CountDown.vue';
 import Modal from '../Pages/Modal.vue';
 
 const colors = ['#FFAF36','#43F2F2', '#FFF308', '#FA0000', '#3697FF','#43F2F2', '#AC43F2', '#43F266']
@@ -30,7 +31,7 @@ const colors = ['#FFAF36','#43F2F2', '#FFF308', '#FA0000', '#3697FF','#43F2F2', 
 export default {
   components: { 
     mapSVG, 
-    //CountDown, 
+    CountDown, 
     Modal },
   name: 'Map',
   data () {
@@ -60,7 +61,7 @@ export default {
    clickedColor(color){
      this.selectedColor = color
      var clickColor = { colorClicked: this.selectedColor, date: new Date() }
-    this.arrayClicks.push(clickColor)
+     this.arrayClicks.push(clickColor)
    },
    emptyMap(){
     const paths = document.getElementsByClassName('region')
@@ -84,5 +85,12 @@ export default {
   .containerMap {
     display: flex;
     align-items: flex-start;
+  }
+
+  .optionButtons button{
+    background: #00aae4;
+    padding: 0,5rem 0;
+    cursor: pointer;
+    margin: 2px;
   }
 </style>

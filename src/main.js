@@ -7,9 +7,10 @@ import App from './App.vue'
 // import Form from './Pages/Form.vue'
 import VueRouter from 'vue-router'
 import routes from './router.js'
-
+import VuePapaParse from 'vue-papa-parse'
 
 Vue.use(VueRouter)
+Vue.use(VuePapaParse)
 
 // const routes = [
 //   { path: '/', component: Login },

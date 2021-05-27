@@ -73,10 +73,10 @@ export default {
      
   },
   mounted() {
-    const paths = document.getElementsByClassName('region');
+    const paths = document.getElementsByClassName('region')
     Array.from(paths).forEach(path => {
         path.addEventListener("click", (e) => {
-            this.$emit('clickRegion', e.target);
+            this.$emit('clickRegion', e.target)
         });
         
     });

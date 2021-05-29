@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import API from '../API.js';
+
 export default {
   name: 'Login',
   data () {
@@ -22,9 +24,11 @@ export default {
     }
   },
   methods: {
-    sendForm () {
+    async sendForm () {
+      API.login(this.email, this.password)
+      // console.log('LOL', this.email, this.password)
+      // if(response) 
       this.$router.push('/instructions')
-      console.log('LOL', this.email, this.password)
     }
   }
 }

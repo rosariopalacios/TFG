@@ -8,15 +8,14 @@ import Admin from './Pages/Admin.vue'
 
 
 const routes = [
-  { path: '/', component: Admin },
-  // { path: '/', component: Login },
   { path: '/login', component: Login },
   { path: '/studentslist', component: StudentsList},
   { path: '/instructions', component: Instructions },
-  { path: '/map', component: Map},
+  { path: '/map', name: 'Map', component: Map},
   { path: '/modal', component: Modal},
-  { path: '/form', component: Form},
-  { path: '/admin', component: Admin}
+  { path: '/form', name: '/form', component: Form},
+  { path: '/admin', component: Admin},
+  { path: '/', component: Login }
 ]
 
 export default routes

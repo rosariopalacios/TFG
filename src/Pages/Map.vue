@@ -6,11 +6,11 @@
       </div>
 
     <div class="optionButtons">
-      <CountDown :seconds="1200"/>
-        <button id="instrucciones" @click="showModal = true "> Instrucciones </button>
+        <CountDown :seconds="1200"/>
+        <button id="instructions" @click="showModal = true "> Instrucciones </button>
         <modal v-if="showModal" @close="showModal = false"/> 
-        <button id="limpiar" @click="emptyMap"> Limpiar mapa </button>
-        <button id="formulario" @click="continueToForm"> Enviar</button>
+        <button id="clear" @click="emptyMap"> Limpiar mapa </button>
+        <button id="form" @click="continueToForm"> Enviar</button>
          <div class="colorButtons">
         <button v-for="(color, index) in colors" v-bind:style="{'background-color': color}" :key="index" @click="clickedColor(color)">
         </button>
@@ -29,11 +29,12 @@ import Modal from '../Pages/Modal.vue';
 const colors = ['#FFAF36','#43F2F2', '#FFF308', '#FA0000', '#3697FF','#43F2F2', '#AC43F2', '#43F266']
 
 export default {
+  name: 'Map',
   components: { 
     mapSVG, 
     CountDown, 
-    Modal },
-  name: 'Map',
+    Modal 
+  },
   data () {
     return {
       selectedColor : '',
@@ -47,20 +48,23 @@ export default {
   mounted(){
     
   },
+  created () {
+    console.log('Created Map')
+  },
   methods: {
    continueToForm (){
-     console.log(this.arrayClicks)
-    // this.$router.push('/form')
+     // Buscar como al hacer un router push poder mandar info.
+    this.$router.push({name: '/form', params: {arrayClicks: this.arrayClicks}})
    },
    handleClick(region){
      this.selectedRegion = region
       this.selectedRegion.style.fill = this.selectedColor
-      var clickRegion = { regionClicked: region.id, colorPainted: this.selectedColor, date: new Date() }
+      const clickRegion = { regionClicked: region.id, colorPainted: this.selectedColor, date: new Date() }
       this.arrayClicks.push(clickRegion)
    },
    clickedColor(color){
      this.selectedColor = color
-     var clickColor = { colorClicked: this.selectedColor, date: new Date() }
+     const clickColor = { colorClicked: this.selectedColor, date: new Date() }
      this.arrayClicks.push(clickColor)
    },
    emptyMap(){

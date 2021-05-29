@@ -27,22 +27,23 @@ components: {  },
         }
     },
     mounted () {
-        this.countdown = moment.utc(this.seconds).format('HH:mm:ss');
-        this.expires_in = this.seconds;
-        this._setInterval();
+        this.countdown = moment.utc(this.seconds).format('HH:mm:ss')
+        this.expires_in = this.seconds
+        this._setInterval()
     },
     methods: {
         _setInterval: function() {
                 this.interval = setInterval(() => {
                     if (this.expires_in === 0) {
-                        clearInterval(this.interval);
+                        clearInterval(this.interval)
+                        alert("Tiempo finalizado. Enviando a cuestionario")
+                        this.$router.push('/form')
                     } else {
                         this.expires_in -= 1;
-                        this.countdown = moment.utc(this.expires_in * 1000).subtract(1, 'seconds').format('HH:mm:ss');
+                        this.countdown = moment.utc(this.expires_in * 1000).subtract(1, 'seconds').format('HH:mm:ss')
                     }
                 }, 1000);
-        }
-        
+        }        
     }
 }
 </script>

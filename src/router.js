@@ -1,10 +1,11 @@
-import Login from './Pages/Login.vue'
-import StudentsList from './Pages/StudentsList.vue'
-import Instructions from './Pages/Instructions.vue'
-import Map from './Pages/Map.vue'
-import Modal from './Pages/Modal.vue'
-import Form from './Pages/Form.vue'
-import Admin from './Pages/Admin.vue'
+import Login from './Views/Login.vue'
+import StudentsList from './Views/StudentsList.vue'
+import Instructions from './Views/Instructions.vue'
+import Map from './Views/Map.vue'
+import Modal from './Views/Modal.vue'
+import Form from './Views/Form.vue'
+import Admin from './Views/Admin.vue'
+import SignUp from './Views/SignUp.vue'
 
 
 const routes = [
@@ -15,6 +16,7 @@ const routes = [
   { path: '/modal', component: Modal},
   { path: '/form', name: '/form', component: Form},
   { path: '/admin', component: Admin},
+  { path: '/signUp', component: SignUp },
   { path: '/', component: Login }
 ]
 

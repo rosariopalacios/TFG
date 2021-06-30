@@ -9,9 +9,19 @@ Vue.use(VuePapaParse)
 
 
 const router = new VueRouter({
-  mode: 'history',
   routes
 })
+ router.beforeEach((to, from, next) => {
+
+  const userLoged = localStorage.getItem('user')
+  const isAdmin = localStorage.getItem('isAdmin')
+  if(userLoged === undefined || ((to.path === '/admin' || to.path === '/signup') && isAdmin === 'false')) {
+    next('/login')
+  } else {
+    next()
+    return
+  }
+ })
 
 Vue.config.productionTip = false
 

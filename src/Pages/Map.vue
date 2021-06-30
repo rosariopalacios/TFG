@@ -11,7 +11,7 @@
         <modal v-if="showModal" @close="showModal = false"/> 
         <button id="clear" @click="emptyMap"> Limpiar mapa </button>
         <button id="form" @click="continueToForm"> Enviar</button>
-         <div class="colorButtons">
+        <div class="colorButtons">
         <button v-for="(color, index) in colors" v-bind:style="{'background-color': color}" :key="index" @click="clickedColor(color)">
         </button>
       </div>
@@ -86,6 +86,7 @@ export default {
   cursor: pointer;
   }
 
+
   .containerMap {
     display: flex;
     align-items: flex-start;
@@ -97,4 +98,5 @@ export default {
     cursor: pointer;
     margin: 2px;
   }
+
 </style>

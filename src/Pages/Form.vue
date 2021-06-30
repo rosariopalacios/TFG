@@ -66,8 +66,10 @@ export default {
 
 <style scoped>
 .form div{
+  /* display: inline-flexbox; */
   display: inline-flexbox;
   margin-top: 20px;
+  width: 100%;
 }
 textarea{
   width: 80%;

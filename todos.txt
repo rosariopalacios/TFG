@@ -1,0 +1,16 @@
+- Que llegue la info del formulario al metodo de API. 
+- Que llegue el historico del mapa al form y tambien la API.
+- Refactor del form (Guardar la logica de negocio en constantes separadas)
+- En todas las pantallas si el usuario no esta logueado que rediriga a Login.al
+- En la pantalla de admin si el usuario logueado no es ADMIN que rediriga a la pagina que queramos.
+- Subir el proyecto a Gihub. Avisar a David de esto.
+- Crear la cuenta de mongodb. Pasar credenciales a David.
+- Countdown si llega a 0 que te lleve al formulario tanto si has terminado como si no.al
+- Si el login falla, que salga un mensaje de error.
+- Refactor general.
+- Todo a ingles, por favor.
+
+
+- Poner node-express y gestionar las peticiones de csv, login y formulario.
+- Listar en ADMIN los usuarios y el historico.
+- Historico que se pueda descargar. ¿Formato? ¿Cada historico, historico por alumnos, historicos de todos los tiempos?

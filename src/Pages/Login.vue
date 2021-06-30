@@ -1,6 +1,8 @@
 <template>
   <div class="login">
-    <h1 class="tilte">Login</h1>
+    <h1>
+      <img class="uniovi" src="../assets/uniovi.png" />
+    </h1>
     <div class="form">
       <label class="login-label" for="#email">Email:</label>
       <input class="login-input" type="email" v-model="email" />
@@ -25,7 +27,7 @@ export default {
   },
   methods: {
     async sendForm () {
-      API.login(this.email, this.password)
+      await API.login(this.email, this.password)
       // console.log('LOL', this.email, this.password)
       // if(response) 
       this.$router.push('/instructions')
@@ -35,9 +37,6 @@ export default {
 </script>
 
 <style scoped>
-.login {
-  padding: 2rem;
-}
 .title {
   text-align: center;
 }
@@ -46,7 +45,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 20%;
+  width: 50%;
   min-width: 350px;
   max-width: 100%;
   background: rgba(0, 86, 151, 0.9);
@@ -74,5 +73,10 @@ export default {
   margin-top: 3rem;
   padding: 1rem 0;
   cursor: pointer;
+}
+
+.uniovi {
+  width: 40 px;
+  height: 40 px;
 }
 </style>

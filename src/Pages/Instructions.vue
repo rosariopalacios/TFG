@@ -3,7 +3,8 @@
     <h1 class="title">Instrucciones</h1>
     <div class="instructions-text">
       <p>Se parte de un mapa en el que se les ofrecen 8 colores, debes utilizar el número mínimo de colores posibles para colorear el mapa. Las regiones colindantes no pueden colorearse del mismo color.
-            Dispones de un tiempo de 20 minutos para terminar con el objetivo de conseguir responder a la siguiente cuestión: "¿Cuál es el menor número de colores con el que se puede colorear el siguiente mapa?"</p>
+            Dispones de un tiempo de 20 minutos para terminar con el objetivo de conseguir responder a la siguiente cuestión: 
+            <br> "¿Cuál es el menor número de colores con el que se puede colorear el siguiente mapa?"</p>
       <input class="continue" type="submit" @click="passToMap" value="Continuar"/> 
 
     </div>
@@ -34,7 +35,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 20%;
+  width: 50%;
   min-width: 350px;
   max-width: 100%;
   background: rgba(0, 86, 151, 0.9);
@@ -46,6 +47,7 @@ p{
   margin-top: 2rem;
   color: white;
   margin-bottom: 0.5rem;
+  text-align: justify;
 }  
 .continue{
   background: #00aae4;

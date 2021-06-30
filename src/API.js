@@ -1,11 +1,12 @@
+import axios from 'axios';
 
-
-const login = (email, password) => {
-    console.log(email, password)
+const login = async (email, password) => {
+  console.log('Llamo al login')
+  await axios.post('/loginbackend', { email, password })
 }
 
 const sendCSV = (students) => {
-  console.log(students,'EN LA API')
+  axios.post('/saveUsers', students)
 }
 
 const sendForm = () => {

@@ -1,17 +1,4 @@
-import axios from 'axios';
-
-// Borrar todos los comentarios HECHO
-// Borrar todos los console.log HECHO
-// Borramos los ; del codigo (NO LOS DEL CSS!) HECHO
-// Tabular correctamente HECHO (usar cmd + shift + P y Format Document)
-// Todo el codigo a Ingles HECHO
-// No harcodeamos variables
-// Refactor de los metodos de CSV
-// Aplicar programación funcional. Cada funcion hace 1 cosa.
-// Extraemos a compomentes las distintas funcionalidades
-// DESPLEGAR
-
-
+import axios from 'axios'
 
 const login = async (email, password) => {
  const response = await axios.post('/loginbackend', { email, password })
@@ -27,6 +14,7 @@ const sendCSV = (students) => {
   axios.post('/saveUsers', students)
 }
 
+//Mostrar mensajes
 const sendForm = ({email, arrayClick}) => {
 axios.post('/saveMap', { email, arrayClick })
 }

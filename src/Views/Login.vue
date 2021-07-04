@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import API from "../API.js";
+import API from "../API.js"
 
 export default {
   name: "Login",
@@ -34,44 +34,44 @@ export default {
       password: "",
       message: "",
       typeMessage: "success",
-    };
+    }
   },
   methods: {
     async sendForm() {
       if (this.email.length == 0) {
-        this.typeMessage = "error";
-        this.message = "Por favor introduzca un email";
+        this.typeMessage = "error"
+        this.message = "Por favor introduzca un email"
       } else if (this.password == 0) {
-        this.typeMessage = "error";
-        this.message = "Por favor introduzca una contraseña";
+        this.typeMessage = "error"
+        this.message = "Por favor introduzca una contraseña"
       } else {
-        const response = await API.login(this.email, this.password);
-        this.message = response.data.message;
+        const response = await API.login(this.email, this.password)
+        this.message = response.data.message
 
         if (response.data.usuario) {
-          localStorage.setItem("user", response.data.usuario.email);
-          localStorage.setItem("isAdmin", response.data.usuario.isAdmin);
+          localStorage.setItem("user", response.data.usuario.email)
+          localStorage.setItem("isAdmin", response.data.usuario.isAdmin)
 
-          this.typeMessage = "success";
+          this.typeMessage = "success"
           setTimeout(() => {
             this.message = ""
             if(localStorage.getItem('isAdmin') === 'true'){
-              this.$router.push("/admin");
+              this.$router.push("/admin")
             } else {
-            this.$router.push("/instructions");
+            this.$router.push("/instructions")
             }
-          }, 1000);
+          }, 1000)
 
-          return;
+          return
         }
-        this.typeMessage = "error";
+        this.typeMessage = "error"
         setTimeout(() => {
-          this.message = "";
-        }, 1000);
+          this.message = ""
+        }, 1000)
       }
     },
   },
-};
+}
 </script>
 
 <style scoped>

@@ -41,7 +41,31 @@
   </div>
 </template>
 <script>
+import Student from "../models/Student.js";
 import API from "../API.js";
+
+const answers = {
+  numberSelected:
+    "¿Cuál es el menor número de colores que has empleado para colorear el mapa?",
+  lessNumOptions:
+    "¿Crees que podría colorearse con un número de colores menor al que tú has empleado?",
+  whyLessNumOptions: "¿Por qué? Justifica la respuesta.",
+  strategySelected: "¿Qué estrategia has utilizado para resolver el juego?",
+  isMathsRelated:
+    "¿Crees que el juego tiene alguna relación con las matemáticas?",
+  difficultyLevel: "Puntúa del 1 al 5 la dificultad del juego.",
+  mathsLikesNumber: "Puntúa del 1 al 5 tu gusto por las matemáticas.",
+};
+
+const buildSentencesActions = {
+  colorClicked: (action) =>
+    `Color seleccionado: ${action.colorClicked} fecha: ${action.date} \n\r, `,
+  clickRegion: (action) =>
+    `Comunidad pintada: ${action.regionClicked} fecha: ${action.date} color: ${action.colorPainted} \n\r, `,
+  "Continue to form": (action) =>
+    `Continuar al formulario fecha: ${action.date} \n\r, `,
+  "Reset map": (action) => `Resetear mapa fecha: ${action.date} \n\r, `,
+};
 
 const titleNoAllowed = "LISTADO DE ALUMNOS MATRICULADOS";
 
@@ -56,20 +80,26 @@ export default {
   },
   async created() {
     const response = await API.getListStudents();
-    response.data.students = response.data.students.filter(student => !student.isAdmin)
-    this.listBehaviour = response.data.students.map((student) => {
-      return {
-        email: student.email,
-        name: student.nombre,
-        expoClass: student.clasesExpositivas,
-        class: student.practicasDeAula,
-        labClass: student.practicasDeLaboratorio,
-        arrayClicks: student.arrayClick,
-      };
-    });
+    response.data.students = response.data.students.filter(
+      (student) => !student.isAdmin
+    );
+
+    this.listBehaviour = this.buildStudents(response.data.students);
   },
 
   methods: {
+    buildStudents(listStudents) {
+      return listStudents.map((student) => {
+        return {
+          email: student.email,
+          name: student.nombre,
+          expoClass: student.clasesExpositivas,
+          class: student.practicasDeAula,
+          labClass: student.practicasDeLaboratorio,
+          arrayClicks: student.arrayClick,
+        };
+      });
+    },
     getFile() {
       const files = this.$refs.listStudents.files[0];
       this.$papa.parse(files, {
@@ -85,78 +115,47 @@ export default {
       const students = [];
       CSV.forEach((row) => {
         if (this.isValidRow(row)) return;
-
-        let student = {
-          numero: row[0],
-          dni: row[1],
-          nombre: row[2],
-          email: row[3],
-          convocatorias: row[4],
-          matriculas: row[5],
-          evalucionDiferenciada: row[6],
-          erasmus: row[7],
-          clasesExpositivas: row[8],
-          practicasDeAula: row[9],
-          practicasDeLaboratorio: row[10],
-          tutoriasGrupales: row[11],
-        };
+        const student = this.buildStudent(row);
         students.push(student);
       });
       API.sendCSV(students);
     },
     async mapForms() {
       const response = await API.getListStudents();
-      response.data.students = response.data.students.filter(student => !student.isAdmin)
+      response.data.students = response.data.students.filter(
+        (student) => !student.isAdmin
+      );
       this.listForms = response.data.students.map((student) => {
-        console.log(student.form)
         return {
           email: student.email,
           form: student.form,
         };
       });
 
-      const respuestas = {
-        'numberSelected': '¿Cuál es el menor número de colores que has empleado para colorear el mapa?',
-        'lessNumOptions': '¿Crees que podría colorearse con un número de colores menor al que tú has empleado?',
-        'whyLessNumOptions': '¿Por qué? Justifica la respuesta.',
-        'strategySelected': '¿Qué estrategia has utilizado para resolver el juego?',
-        'isMathsRelated': '¿Crees que el juego tiene alguna relación con las matemáticas?',
-        'difficultyLevel': 'Puntúa del 1 al 5 la dificultad del juego.',
-        'mathsLikesNumber': 'Puntúa del 1 al 5 tu gusto por las matemáticas.',
-      }
-      const array = this.listForms.map(student => {
+      const studentsFormated = this.listForms.map((student) => {
         const studentFormated = {
-          email: student.email
+          email: student.email,
+        };
+        for (const question in student.form) {
+          studentFormated[answers[question]] = student.form[question];
         }
-        for(const question in student.form) {
-          studentFormated[respuestas[question]] = student.form[question]
-        }
-        return studentFormated
-      })
-      var csvForms = this.$papa.unparse(array)
-      this.$papa.download(csvForms, 'CSVForms')
+        return studentFormated;
+      });
+
+      const csvForms = this.$papa.unparse(studentsFormated);
+      this.$papa.download(csvForms, "CSVForms");
     },
     goToSignUp() {
       this.$router.push("/signUp");
     },
     async exportToCSV() {
-      let copyListBehaviour = this.listBehaviour
+      let copyListBehaviour = this.listBehaviour;
       const arrayCSV = copyListBehaviour.map((student) => {
         const studentParsed = { ...student };
         studentParsed.actions = "";
-        student.arrayClicks.forEach((eachAction) => {
-          if (eachAction.action === "colorClicked") {
-            studentParsed.actions += `Color seleccionado: ${eachAction.colorClicked} fecha: ${eachAction.date} \n\r, `;
-          }
-          if (eachAction.action === "clickRegion") {
-            studentParsed.actions += `Comunidad pintada: ${eachAction.regionClicked} fecha: ${eachAction.date} color: ${eachAction.colorPainted} \n\r, `;
-          }
-          if (eachAction.action === "Continue to form") {
-            studentParsed.actions += `Continuar al formulario fecha: ${eachAction.date} \n\r, `;
-          }
-          if (eachAction.action === "Reset map") {
-            studentParsed.actions += `Resetear mapa fecha: ${eachAction.date} \n\r, `;
-          }
+
+        student.arrayClicks.forEach((action) => {
+          studentParsed.actions += buildSentencesActions[action.action](action);
         });
 
         delete studentParsed.arrayClicks;
@@ -166,10 +165,22 @@ export default {
       var csvToDowloand = this.$papa.unparse(arrayCSV);
       this.$papa.download(csvToDowloand, "CSV");
     },
-    // parseActions(actions) {
-    //   // action, date, colorClicked, colorPainted
-
-    // }
+    buildStudent(row) {
+      return {
+        numero: row[0],
+        dni: row[1],
+        nombre: row[2],
+        email: row[3],
+        convocatorias: row[4],
+        matriculas: row[5],
+        evalucionDiferenciada: row[6],
+        erasmus: row[7],
+        clasesExpositivas: row[8],
+        practicasDeAula: row[9],
+        practicasDeLaboratorio: row[10],
+        tutoriasGrupales: row[11],
+      };
+    },
   },
 };
 </script>

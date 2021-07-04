@@ -39,32 +39,32 @@ export default {
   methods: {
     async sendForm() {
       if (this.email.length == 0) {
-        this.typeMessage = "error";
-        this.message = "Por favor introduzca un email";
+        this.typeMessage = "error"
+        this.message = "Por favor introduzca un email"
       } else if (this.password == 0) {
-        this.typeMessage = "error";
-        this.message = "Por favor introduzca una contraseña";
+        this.typeMessage = "error"
+        this.message = "Por favor introduzca una contraseña"
       } else {
-        const response = await API.signUp(this.email, this.password);
-        this.message = response.data.message;
+        const response = await API.signUp(this.email, this.password)
+        this.message = response.data.message
 
         if (!response.data.usuario) {
-          this.typeMessage = "success";
+          this.typeMessage = "success"
           setTimeout(() => {
-            this.message = "";
-            this.$router.push("/admin");
-          }, 1000);
+            this.message = ""
+            this.$router.push("/admin")
+          }, 1000)
 
-          return;
+          return
         }
-        this.typeMessage = "error";
+        this.typeMessage = "error"
         setTimeout(() => {
-          this.message = "";
-        }, 1000);
+          this.message = ""
+        }, 1000)
       }
     },
   },
-};
+}
 </script>
 
 <style scoped>

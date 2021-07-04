@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import mapSVG from "../Views/MapSVG.vue";
-import CountDown from "../Views/CountDown.vue";
-import Modal from "../Views/Modal.vue";
-import API from "../API.js";
+import mapSVG from "../Views/MapSVG.vue"
+import CountDown from "../Views/CountDown.vue"
+import Modal from "../Views/Modal.vue"
+import API from "../API.js"
 
 const colors = [
   "#FFAF36",
@@ -37,7 +37,7 @@ const colors = [
   "#E30052",
   "#AC43F2",
   "#43F266",
-];
+]
 
 export default {
   name: "Map",
@@ -54,47 +54,47 @@ export default {
       showModal: false,
       colors,
       arrayClicks: [],
-    };
+    }
   },
   methods: {
     continueToForm() {
-      const finish = { action: "Continue to form", date: new Date() };
-      this.arrayClicks.push(finish);
-      let email = localStorage.getItem("user");
-      API.sendForm({ email: email, arrayClick: this.arrayClicks });
-      this.$router.push({ name: "/form" });
+      const finish = { action: "Continue to form", date: new Date() }
+      this.arrayClicks.push(finish)
+      let email = localStorage.getItem("user")
+      API.sendForm({ email: email, arrayClick: this.arrayClicks })
+      this.$router.push({ name: "/form" })
     },
     handleClick(region) {
-      this.selectedRegion = region;
-      this.selectedRegion.style.fill = this.selectedColor;
+      this.selectedRegion = region
+      this.selectedRegion.style.fill = this.selectedColor
       const clickRegion = {
         action: "clickRegion",
         regionClicked: region.id,
         colorPainted: this.selectedColor,
         date: new Date(),
-      };
-      this.arrayClicks.push(clickRegion);
+      }
+      this.arrayClicks.push(clickRegion)
     },
     clickedColor(color) {
-      this.selectedColor = color;
+      this.selectedColor = color
       const clickColor = {
         action: "colorClicked",
         colorClicked: this.selectedColor,
         date: new Date(),
-      };
-      this.arrayClicks.push(clickColor);
+      }
+      this.arrayClicks.push(clickColor)
     },
     emptyMap() {
-      const paths = document.getElementsByClassName("region");
+      const paths = document.getElementsByClassName("region")
       Array.from(paths).forEach((path) => {
-        path.style.fill = "#FFFFFF";
-      });
-      const empty = { action: "Reset map", date: new Date() };
-      this.arrayClicks.push(empty);
+        path.style.fill = "#FFFFFF"
+      })
+      const empty = { action: "Reset map", date: new Date() }
+      this.arrayClicks.push(empty)
     },
     checkRegions() {},
   },
-};
+}
 </script>
 
 <style scoped>

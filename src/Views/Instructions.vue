@@ -27,10 +27,10 @@ export default {
 
   methods: {
     passToMap() {
-      this.$router.push("/map");
+      this.$router.push("/map")
     },
   },
-};
+}
 </script>
 
 <style scoped>

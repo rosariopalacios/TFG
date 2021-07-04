@@ -91,23 +91,23 @@
   </div>
 </template>
 <script>
-const numOptions = ["1", "2", "3", "4", "5", "6", "7", "8"];
+const numOptions = ["1", "2", "3", "4", "5", "6", "7", "8"]
 const difficultyLevels = [
   "1. Muy fácil",
   "2.Fácil",
   "3.Dificultad intermedia",
   "4.Difícil",
   "5.Muy difícil",
-];
+]
 const mathsLikes = [
   "1.No me gustan nada",
   "2.No me gustan mucho",
   "3.Me son indiferentes",
   "4.Me gustan",
   "5.Me encantan",
-];
+]
 
-import API from "../API.js";
+import API from "../API.js"
 export default {
   name: "Form",
   data() {
@@ -122,7 +122,7 @@ export default {
       mathsRelated: "",
       difficulty: 0,
       mathsLike: 0,
-    };
+    }
   },
   methods: {
     sendResults() {
@@ -134,12 +134,12 @@ export default {
         isMathsRelated: this.mathsRelated,
         difficultyLevel: this.difficulty,
         mathsLikesNumber: this.mathsLike,
-      };
-      const email = localStorage.getItem("user");
-      API.sendResults(email, results);
+      }
+      const email = localStorage.getItem("user")
+      API.sendResults(email, results)
     },
   },
-};
+}
 </script>
 
 <style scoped>

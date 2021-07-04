@@ -7,19 +7,20 @@ import VuePapaParse from 'vue-papa-parse'
 Vue.use(VueRouter)
 Vue.use(VuePapaParse)
 
-
 const router = new VueRouter({
   routes
 })
- router.beforeEach((to, from, next) => {
 
+const adminRoutes = ['/admin', '/signup']
+const isAdminRoute = path => adminRoutes.find(route => route === path)
+
+router.beforeEach((to, from, next) => {
   const userLoged = localStorage.getItem('user')
   const isAdmin = localStorage.getItem('isAdmin')
-  if(userLoged === undefined || ((to.path === '/admin' || to.path === '/signup') && isAdmin === 'false')) {
+  if(userLoged === undefined || (isAdminRouter(to.path) && isAdmin === 'false')) {
     next('/login')
   } else {
     next()
-    return
   }
  })
 

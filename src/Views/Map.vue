@@ -54,6 +54,7 @@ export default {
       showModal: false,
       colors,
       arrayClicks: [],
+      registro: {}
     }
   },
   methods: {
@@ -64,7 +65,26 @@ export default {
       API.sendForm({ email: email, arrayClick: this.arrayClicks })
       this.$router.push({ name: "/form" })
     },
-    handleClick(region) {
+    handleClick(region, infoRegions) {
+      const { id, brothers } = infoRegions
+      const arrayYaPintados = Object.keys(this.registro)
+      let prueba = false
+      arrayYaPintados.forEach(hermano => {
+        prueba = brothers.some(brother => brother === hermano)
+      })
+      let puedesPasar = true
+      if(prueba) {
+        brothers.forEach(elemento => {
+          if(this.registro[elemento]) {
+           if(this.registro[elemento] === this.selectedColor){
+            alert('No puedes pintar hermanos del mismo color, cambia el color')
+            puedesPasar = false
+           }  
+          }
+        })
+      }
+      if(!puedesPasar) return
+      this.registro[id] = this.selectedColor
       this.selectedRegion = region
       this.selectedRegion.style.fill = this.selectedColor
       const clickRegion = {

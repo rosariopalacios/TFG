@@ -17,7 +17,7 @@ const isAdminRoute = path => adminRoutes.find(route => route === path)
 router.beforeEach((to, from, next) => {
   const userLoged = localStorage.getItem('user')
   const isAdmin = localStorage.getItem('isAdmin')
-  if(userLoged === undefined || (isAdminRouter(to.path) && isAdmin === 'false')) {
+  if(userLoged === undefined || (isAdminRoute(to.path) && isAdmin === 'false')) {
     next('/login')
   } else {
     next()

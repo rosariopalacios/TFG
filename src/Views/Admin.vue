@@ -41,7 +41,6 @@
   </div>
 </template>
 <script>
-import Student from "../models/Student.js"
 import API from "../API.js"
 
 const answers = {

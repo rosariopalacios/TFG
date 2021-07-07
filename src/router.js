@@ -1,5 +1,4 @@
 import Login from './Views/Login.vue'
-import StudentsList from './Views/StudentsList.vue'
 import Instructions from './Views/Instructions.vue'
 import Map from './Views/Map.vue'
 import Modal from './Views/Modal.vue'
@@ -10,7 +9,6 @@ import SignUp from './Views/SignUp.vue'
 
 const routes = [
   { path: '/login', component: Login },
-  { path: '/studentslist', component: StudentsList},
   { path: '/instructions', component: Instructions },
   { path: '/map', name: 'Map', component: Map},
   { path: '/modal', component: Modal},

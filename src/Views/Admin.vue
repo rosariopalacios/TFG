@@ -41,8 +41,8 @@
   </div>
 </template>
 <script>
-import Student from "../models/Student.js";
-import API from "../API.js";
+import Student from "../models/Student.js"
+import API from "../API.js"
 
 const answers = {
   numberSelected:
@@ -55,7 +55,7 @@ const answers = {
     "¿Crees que el juego tiene alguna relación con las matemáticas?",
   difficultyLevel: "Puntúa del 1 al 5 la dificultad del juego.",
   mathsLikesNumber: "Puntúa del 1 al 5 tu gusto por las matemáticas.",
-};
+}
 
 const buildSentencesActions = {
   colorClicked: (action) =>
@@ -65,9 +65,9 @@ const buildSentencesActions = {
   "Continue to form": (action) =>
     `Continuar al formulario fecha: ${action.date} \n\r, `,
   "Reset map": (action) => `Resetear mapa fecha: ${action.date} \n\r, `,
-};
+}
 
-const titleNoAllowed = "LISTADO DE ALUMNOS MATRICULADOS";
+const titleNoAllowed = "LISTADO DE ALUMNOS MATRICULADOS"
 
 export default {
   name: "Admin",
@@ -79,12 +79,12 @@ export default {
     };
   },
   async created() {
-    const response = await API.getListStudents();
+    const response = await API.getListStudents()
     response.data.students = response.data.students.filter(
       (student) => !student.isAdmin
-    );
+    )
 
-    this.listBehaviour = this.buildStudents(response.data.students);
+    this.listBehaviour = this.buildStudents(response.data.students)
   },
 
   methods: {
@@ -97,73 +97,73 @@ export default {
           class: student.practicasDeAula,
           labClass: student.practicasDeLaboratorio,
           arrayClicks: student.arrayClick,
-        };
-      });
+        }
+      })
     },
     getFile() {
-      const files = this.$refs.listStudents.files[0];
+      const files = this.$refs.listStudents.files[0]
       this.$papa.parse(files, {
         delimiter: ";",
         encoding: "UTF-8",
         complete: (results) => this.parseCSV(results.data),
-      });
+      })
     },
     isValidRow(row) {
-      return !row[0] || row[1] === "DNI" || row[0] === titleNoAllowed;
+      return !row[0] || row[1] === "DNI" || row[0] === titleNoAllowed
     },
     parseCSV(CSV) {
-      const students = [];
+      const students = []
       CSV.forEach((row) => {
-        if (this.isValidRow(row)) return;
-        const student = this.buildStudent(row);
-        students.push(student);
-      });
-      API.sendCSV(students);
+        if (this.isValidRow(row)) return
+        const student = this.buildStudent(row)
+        students.push(student)
+      })
+      API.sendCSV(students)
     },
     async mapForms() {
-      const response = await API.getListStudents();
+      const response = await API.getListStudents()
       response.data.students = response.data.students.filter(
         (student) => !student.isAdmin
-      );
+      )
       this.listForms = response.data.students.map((student) => {
         return {
           email: student.email,
           form: student.form,
-        };
-      });
+        }
+      })
 
       const studentsFormated = this.listForms.map((student) => {
         const studentFormated = {
           email: student.email,
-        };
-        for (const question in student.form) {
-          studentFormated[answers[question]] = student.form[question];
         }
-        return studentFormated;
-      });
+        for (const question in student.form) {
+          studentFormated[answers[question]] = student.form[question]
+        }
+        return studentFormated
+      })
 
-      const csvForms = this.$papa.unparse(studentsFormated);
-      this.$papa.download(csvForms, "CSVForms");
+      const csvForms = this.$papa.unparse(studentsFormated)
+      this.$papa.download(csvForms, "CSVForms")
     },
     goToSignUp() {
-      this.$router.push("/signUp");
+      this.$router.push("/signUp")
     },
     async exportToCSV() {
-      let copyListBehaviour = this.listBehaviour;
+      let copyListBehaviour = this.listBehaviour
       const arrayCSV = copyListBehaviour.map((student) => {
-        const studentParsed = { ...student };
-        studentParsed.actions = "";
+        const studentParsed = { ...student }
+        studentParsed.actions = ""
 
         student.arrayClicks.forEach((action) => {
-          studentParsed.actions += buildSentencesActions[action.action](action);
-        });
+          studentParsed.actions += buildSentencesActions[action.action](action)
+        })
 
-        delete studentParsed.arrayClicks;
-        return studentParsed;
-      });
+        delete studentParsed.arrayClicks
+        return studentParsed
+      })
 
-      var csvToDowloand = this.$papa.unparse(arrayCSV);
-      this.$papa.download(csvToDowloand, "CSV");
+      var csvToDowloand = this.$papa.unparse(arrayCSV)
+      this.$papa.download(csvToDowloand, "CSV")
     },
     buildStudent(row) {
       return {
@@ -179,10 +179,10 @@ export default {
         practicasDeAula: row[9],
         practicasDeLaboratorio: row[10],
         tutoriasGrupales: row[11],
-      };
+      }
     },
   },
-};
+}
 </script>
 
 <style scoped>

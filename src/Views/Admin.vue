@@ -102,7 +102,7 @@ export default {
         }
       })
     },
-    //Method to parse the file upload by and admin
+    //Method to upload de CSV
     getFile() {
       const files = this.$refs.listStudents.files[0]
       this.$papa.parse(files, {

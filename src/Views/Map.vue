@@ -127,6 +127,11 @@ export default {
       Array.from(paths).forEach((path) => {
         path.style.fill = "#FFFFFF"
       })
+      
+    //Set all the elements in the object to white
+      for(const elemento in this.registro){
+        this.registro[elemento] = "#FFFFFF"
+      }
       const empty = { action: "Reset map", date: new Date() }
       this.arrayClicks.push(empty)
     }

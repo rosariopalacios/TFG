@@ -150,25 +150,18 @@ export default {
       if (!inpObj.checkValidity()) {
         return
       }
-
+      this.$alert('Enviado con éxito')
       const email = localStorage.getItem("user")
       const response = await API.sendResults(email, results)
       this.message = response.data.message
 
-      if (response.data.form) {
+      if (!response.data.form) {
           this.typeMessage = "success"
           setTimeout(() => {
             this.message = ""
-            this.$alert('Enviado con éxito')
           }, 1000)
 
-          return
-        }
-        this.typeMessage = "error"
-        setTimeout(() => {
-          this.message = ""
-          this.$alert('Error en el envío de los datos')
-        }, 1000)
+      }
     },
   },
 }

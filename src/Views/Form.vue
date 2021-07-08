@@ -87,6 +87,7 @@
       <button
         type="submit"
         class="finishButton"
+        id="submitButton"
         @click="sendResults"
       >"Enviar y finalizar"</button>
     </div>
@@ -151,6 +152,7 @@ export default {
         return
       }
       this.$alert('Enviado con éxito')
+      document.getElementById("submitButton").disabled=true
       const email = localStorage.getItem("user")
       const response = await API.sendResults(email, results)
       this.message = response.data.message
@@ -229,6 +231,10 @@ span {
 
 .radioButtons {
   border: none;
+}
+
+button[disabled] {
+  background-color: grey;
 }
 
 .message {

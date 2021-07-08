@@ -18,6 +18,10 @@
           @click="clickedColor(color)"
         ></button>
       </div>
+      <div class="colorSelected">
+        <label> Color seleccionado: </label>
+        <button id="buttonColorSelected"> </button>
+      </div>
     </div>
   </div>
 </template>
@@ -114,6 +118,7 @@ export default {
     //Method to handle a click on the color
     clickedColor(color) {
       this.selectedColor = color
+      document.getElementById("buttonColorSelected").style.background = this.selectedColor
       const clickColor = {
         action: "colorClicked",
         colorClicked: this.selectedColor,
@@ -148,6 +153,11 @@ export default {
   cursor: pointer;
 }
 
+#buttonColorSelected {
+  width: 20px;
+  height: 20px;
+}
+
 .containerMap {
   display: flex;
   align-items: flex-start;
@@ -159,4 +169,5 @@ export default {
   cursor: pointer;
   margin: 2px;
 }
+
 </style>

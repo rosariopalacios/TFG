@@ -37,17 +37,20 @@ export default {
     }
   },
   methods: {
+    /**
+     * Method to send data from the login inputs to authenticate the users
+     */
     async sendForm() {
-      if (this.email.length == 0) {
-        this.typeMessage = "error"
-        this.message = "Por favor introduzca un email"
-      } else if (this.password == 0) {
-        this.typeMessage = "error"
-        this.message = "Por favor introduzca una contraseña"
-      } else {
+        //Errors to be showed if some of the inputs is missed 
+        if (this.email.length === 0 || this.password.length === 0) {
+          this.typeMessage = "error"
+          this.message = this.email.length === 0 ? "Por favor introduzca un email" : "Por favor introduzca una contraseña"
+          return
+      } 
         const response = await API.login(this.email, this.password)
         this.message = response.data.message
 
+        //Different view based on the type of user login and setup of the localStorage
         if (response.data.usuario) {
           localStorage.setItem("user", response.data.usuario.email)
           localStorage.setItem("isAdmin", response.data.usuario.isAdmin)
@@ -68,7 +71,7 @@ export default {
         setTimeout(() => {
           this.message = ""
         }, 1000)
-      }
+      
     },
   },
 }

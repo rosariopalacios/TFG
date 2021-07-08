@@ -127,8 +127,13 @@ app.get('/listStudents', async (req, res) => {
 
 app.post('/saveResultForm', async (req, res) => {
   const { email, form } = req.body
-  Student.findOneAndUpdate({ email }, { $set: { form }}, (err) => { console.log(err) })
-  res.status(200).json({ mensaje: 'Guardado con exito' })
+  Student.findOneAndUpdate({ email }, { $set: { form }}, function(err) {
+  if(err) {
+    res.status(200).json({ message: 'Error al enviar' }) 
+    return
+  }
+  res.status(200).json({ message: 'Enviado con éxito' , form: form})
+  })
 })
 
 

@@ -3,13 +3,8 @@
     <h1 class="title">Instrucciones</h1>
     <div class="instructions-text">
       <p>
-        Se parte de un mapa en el que se les ofrecen 8 colores, debes utilizar
-        el número mínimo de colores posibles para colorear el mapa. Las regiones
-        colindantes no pueden colorearse del mismo color. Dispones de un tiempo
-        de 20 minutos para terminar con el objetivo de conseguir responder a la
-        siguiente cuestión: <br />
-        "¿Cuál es el menor número de colores con el que se puede colorear el
-        siguiente mapa?"
+        Se parte de un mapa en el que se ofrecen 8 colores, debes utilizar el número mínimo de colores posibles para colorear el mapa. Las regiones colindantes no pueden colorearse del mismo color. Dispones de un tiempo de 20 minutos para terminar con el objetivo de conseguir responder a la siguiente cuestión: <br />
+        "¿Cuál es el menor número de colores con el que se puede colorear el siguiente mapa?"
       </p>
       <input
         class="continue"
@@ -26,6 +21,7 @@ export default {
   name: "Instructions",
 
   methods: {
+    //Method to change to Map view
     passToMap() {
       this.$router.push("/map")
     },

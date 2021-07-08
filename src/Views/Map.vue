@@ -28,6 +28,7 @@ import CountDown from "../Views/CountDown.vue"
 import Modal from "../Views/Modal.vue"
 import API from "../API.js"
 
+
 const colors = [
   "#FFAF36",
   "#43F2F2",
@@ -58,6 +59,7 @@ export default {
     }
   },
   methods: {
+    //Method that send the data from the map and changes to Form view
     continueToForm() {
       const finish = { action: "Continue to form", date: new Date() }
       this.arrayClicks.push(finish)
@@ -65,25 +67,24 @@ export default {
       API.sendForm({ email: email, arrayClick: this.arrayClicks })
       this.$router.push({ name: "/form" })
     },
+    //Method that handles the click on a region with a selected color
     handleClick(region, infoRegions) {
       const { id, brothers } = infoRegions
-      const arrayYaPintados = Object.keys(this.registro)
-      let prueba = false
-      arrayYaPintados.forEach(hermano => {
-        prueba = brothers.some(brother => brother === hermano)
+  
+      let hasBrothersPainted = false
+      Object.keys(this.registro).forEach(regionsPainted => {
+        if(!hasBrothersPainted) {
+          hasBrothersPainted = brothers.some(region => region === regionsPainted)
+        }
       })
-      let puedesPasar = true
-      if(prueba) {
-        brothers.forEach(elemento => {
-          if(this.registro[elemento]) {
-           if(this.registro[elemento] === this.selectedColor){
-            alert('No puedes pintar hermanos del mismo color, cambia el color')
-            puedesPasar = false
-           }  
-          }
-        })
+      //Check if some of the nearest regions of the one clicked have the same color that is trying to paint
+      const canPainted = this.checkPainted(hasBrothersPainted, brothers)
+      //If can´t be painted
+      if(!canPainted) {
+        this.$alert('No se pueden pintar dos regiones contiguas del mismo color')
+      return
       }
-      if(!puedesPasar) return
+      //If no one of the nearest regions has the desired color then it assign it
       this.registro[id] = this.selectedColor
       this.selectedRegion = region
       this.selectedRegion.style.fill = this.selectedColor
@@ -95,6 +96,22 @@ export default {
       }
       this.arrayClicks.push(clickRegion)
     },
+    //Method to check if some of the nearest regions of the one clicked have the same color that is trying to paint
+    checkPainted (hasBrothersPainted, brothers) {
+      let canPainted = true
+      if(hasBrothersPainted) {
+        brothers.forEach(elemento => {
+          if(this.registro[elemento]) {
+           if(this.registro[elemento] === this.selectedColor){
+            canPainted = false
+            return
+           }  
+          }
+        })
+      }
+      return canPainted
+    },
+    //Method to handle a click on the color
     clickedColor(color) {
       this.selectedColor = color
       const clickColor = {
@@ -104,6 +121,7 @@ export default {
       }
       this.arrayClicks.push(clickColor)
     },
+    //Method to set the map back to the initial status
     emptyMap() {
       const paths = document.getElementsByClassName("region")
       Array.from(paths).forEach((path) => {
@@ -111,8 +129,7 @@ export default {
       })
       const empty = { action: "Reset map", date: new Date() }
       this.arrayClicks.push(empty)
-    },
-    checkRegions() {},
+    }
   },
 }
 </script>

@@ -1,13 +1,15 @@
 <template>
   <div class="formfinish">
     <h1 class="title">Cuestionario sobre el mapa</h1>
+
+    <form id="finalForm">
     <div class="questions">
       <div class="elementForm">
         <label class="label" for="numColors"
           >¿Cuál es el menor número de colores que has empleado para colorear el
           mapa?</label
         >
-        <select v-model="numColorsSelected">
+        <select v-model="numColorsSelected" required>
           <option hidden selected>Selecciona una opción</option>
           <option v-for="option in numOptions" :key="option">
             {{ option }}
@@ -22,12 +24,13 @@
         <fieldset class="radioButtons">
           <input
             type="radio"
+            name="radioNumbers"
             id="yes"
             value="Yes"
             v-model="lessNumbersOption"
-          />
+            required/>
           <label for="yes">Sí</label>
-          <input type="radio" id="no" value="No" v-model="lessNumbersOption" />
+          <input type="radio" name="radioNumbers" id="no" value="No" v-model="lessNumbersOption" />
           <label for="no">No</label>
         </fieldset>
         <span>¿Por qué? Justifica la respuesta.</span>
@@ -36,7 +39,7 @@
           class="justifyNumbers"
           placeholder="Tu respuesta"
           v-model="why"
-        ></textarea>
+          required></textarea>
       </div>
       <div>
         <span
@@ -48,7 +51,7 @@
           class="strategy"
           placeholder="Tu respuesta"
           v-model="strategy"
-        ></textarea>
+          required></textarea>
       </div>
       <div>
         <span
@@ -59,13 +62,13 @@
           class="mathsLinked"
           placeholder="Tu respuesta"
           v-model="mathsRelated"
-        ></textarea>
+          required></textarea>
       </div>
       <div>
         <label class="label" for="difficultyLevels"
           >Puntúa del 1 al 5 la dificultad del juego siendo:</label
         >
-        <select v-model="difficulty">
+        <select v-model="difficulty" required>
           <option v-for="level in difficultyLevels" :key="level">
             {{ level }}
           </option>
@@ -75,19 +78,19 @@
         <label class="label" for="mathsLikes"
           >Puntúa del 1 al 5 tu gusto por las matemáticas, siendo:</label
         >
-        <select v-model="mathsLike">
+        <select v-model="mathsLike" required>
           <option v-for="like in mathsLikes" :key="like">
             {{ like }}
           </option>
         </select>
       </div>
-      <input
+      <button
         type="submit"
         class="finishButton"
         @click="sendResults"
-        value="Enviar y finalizar"
-      />
+      >"Enviar y finalizar"</button>
     </div>
+  </form>
   </div>
 </template>
 <script>
@@ -122,10 +125,16 @@ export default {
       mathsRelated: "",
       difficulty: 0,
       mathsLike: 0,
+      message:"",
+      typeMessage:''
     }
   },
+  created(){
+    
+  },
   methods: {
-    sendResults() {
+    //Method to send the answers to the form to the data base and finish the interaction with the web
+    async sendResults() {
       const results = {
         numberSelected: this.numColorsSelected,
         lessNumOptions: this.lessNumbersOption,
@@ -135,8 +144,31 @@ export default {
         difficultyLevel: this.difficulty,
         mathsLikesNumber: this.mathsLike,
       }
+
+      //Check if the form is valid
+      const inpObj = document.getElementById("finalForm");
+      if (!inpObj.checkValidity()) {
+        return
+      }
+
       const email = localStorage.getItem("user")
-      API.sendResults(email, results)
+      const response = await API.sendResults(email, results)
+      this.message = response.data.message
+
+      if (response.data.form) {
+          this.typeMessage = "success"
+          setTimeout(() => {
+            this.message = ""
+            this.$alert('Enviado con éxito')
+          }, 1000)
+
+          return
+        }
+        this.typeMessage = "error"
+        setTimeout(() => {
+          this.message = ""
+          this.$alert('Error en el envío de los datos')
+        }, 1000)
     },
   },
 }
@@ -147,7 +179,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* background: rgba(0, 86, 151, 0.9); */
   border-radius: 5px;
   padding: 40px;
   box-shadow: 0 4px 10px 4px rgba(0, 0, 0, 0.3);
@@ -205,5 +236,18 @@ span {
 
 .radioButtons {
   border: none;
+}
+
+.message {
+  padding: 15px;
+  border: 1px solid black;
+}
+
+.message-success {
+  background: green;
+}
+
+.message-error {
+  background: red;
 }
 </style>

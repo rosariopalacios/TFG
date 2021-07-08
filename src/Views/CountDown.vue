@@ -11,7 +11,6 @@
 <script>
 import * as moment from "moment"
 export default {
-  components: {},
   name: "CountDown",
   props: {
     seconds: {
@@ -50,5 +49,3 @@ export default {
   },
 }
 </script>
-
-<style scoped></style>

@@ -41,6 +41,7 @@
   </div>
 </template>
 <script>
+
 import API from "../API.js"
 
 const answers = {
@@ -77,6 +78,7 @@ export default {
       listForms: [],
     };
   },
+  //When the view is created it gets the students of the database to show them
   async created() {
     const response = await API.getListStudents()
     response.data.students = response.data.students.filter(
@@ -87,6 +89,7 @@ export default {
   },
 
   methods: {
+    //Method for mapping the students
     buildStudents(listStudents) {
       return listStudents.map((student) => {
         return {
@@ -99,6 +102,7 @@ export default {
         }
       })
     },
+    //Method to parse the file upload by and admin
     getFile() {
       const files = this.$refs.listStudents.files[0]
       this.$papa.parse(files, {
@@ -119,6 +123,7 @@ export default {
       })
       API.sendCSV(students)
     },
+    //Method to let the user download a CSV with the answers to the form of the existent students
     async mapForms() {
       const response = await API.getListStudents()
       response.data.students = response.data.students.filter(
@@ -144,9 +149,11 @@ export default {
       const csvForms = this.$papa.unparse(studentsFormated)
       this.$papa.download(csvForms, "CSVForms")
     },
+    //Method to change to SignUp view
     goToSignUp() {
       this.$router.push("/signUp")
     },
+    //Method to export users and their information to a CSV and allow to download
     async exportToCSV() {
       let copyListBehaviour = this.listBehaviour
       const arrayCSV = copyListBehaviour.map((student) => {

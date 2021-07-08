@@ -1,5 +1,5 @@
 <template>
-    <transition name="modal">
+  <transition name="modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
@@ -12,8 +12,8 @@
 
           <div class="modal-body">
             <slot name="body">
-            Se parte de un mapa en el que se les ofrecen 8 colores, debes utilizar el número mínimo de colores posibles para colorear el mapa. Las regiones colindantes no pueden colorearse del mismo color.
-            Dispones de un tiempo de 20 minutos para terminar con el objetivo de conseguir responder a la siguiente cuestión: "¿Cuál es el menor número de colores con el que se puede colorear el siguiente mapa?"            </slot>
+              Se parte de un mapa en el que se ofrecen 8 colores, debes utilizar el número mínimo de colores posibles para colorear el mapa. Las regiones colindantes no pueden colorearse del mismo color. Dispones de un tiempo de 20 minutos para terminar con el objetivo de conseguir responder a la siguiente cuestión: <br />
+              "¿Cuál es el menor número de colores con el que se puede colorear el siguiente mapa?"</slot>
           </div>
 
           <div class="modal-footer">
@@ -31,8 +31,7 @@
 
 <script>
 export default {
-  name: 'Modal',
-  methods: {}
+  name: 'Modal'
 }
 </script>
 
@@ -65,10 +64,11 @@ export default {
   font-family: Helvetica, Arial, sans-serif;
 }
 
-.modal-header slot{
-    font-weight: bold;
+.modal-header{
+  font-weight: bold;
 }
 .modal-body {
+  text-align: justify;
   margin: 20px 0;
 }
 
@@ -80,4 +80,5 @@ export default {
     cursor: pointer;
     margin: 2px;
 }
+
 </style>

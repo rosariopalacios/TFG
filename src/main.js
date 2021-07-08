@@ -3,9 +3,12 @@ import App from './App.vue'
 import routes from './router.js'
 import VueRouter from 'vue-router'
 import VuePapaParse from 'vue-papa-parse'
+import VueSimpleAlert from "vue-simple-alert"
+
 
 Vue.use(VueRouter)
 Vue.use(VuePapaParse)
+Vue.use(VueSimpleAlert)
 
 const router = new VueRouter({
   routes

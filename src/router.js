@@ -5,6 +5,7 @@ import Modal from './Views/Modal.vue'
 import Form from './Views/Form.vue'
 import Admin from './Views/Admin.vue'
 import SignUp from './Views/SignUp.vue'
+import FinalPage from './Views/FinalPage.vue'
 
 
 const routes = [
@@ -15,7 +16,8 @@ const routes = [
   { path: '/form', name: '/form', component: Form},
   { path: '/admin', component: Admin},
   { path: '/signUp', component: SignUp },
-  { path: '/', component: Login }
+  { path: '/', component: Login },
+  { path: '/final', name: '/final', component: FinalPage}
 ]
 
 export default routes

@@ -14,7 +14,6 @@ const sendCSV = (students) => {
   axios.post('/saveUsers', students)
 }
 
-//Mostrar mensajes
 const sendForm = ({email, arrayClick}) => {
 axios.post('/saveMap', { email, arrayClick })
 }

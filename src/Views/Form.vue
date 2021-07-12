@@ -156,6 +156,7 @@ export default {
       const email = localStorage.getItem("user")
       const response = await API.sendResults(email, results)
       this.message = response.data.message
+      this.$router.push({ name: "/final" })
 
       if (!response.data.form) {
           this.typeMessage = "success"

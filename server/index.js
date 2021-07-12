@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import express from 'express'
+import express, { response } from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import path from 'path'
@@ -136,8 +136,7 @@ app.post('/saveResultForm', async (req, res) => {
   })
 })
 
-
-// Middleware para Vue.js router modo history
+// Middleware for Vue.js
 const history = require('connect-history-api-fallback')
 app.use(history())
 app.use(express.static(path.join(__dirname, 'public')))

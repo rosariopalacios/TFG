@@ -171,6 +171,7 @@ export default {
       var csvToDowloand = this.$papa.unparse(arrayCSV)
       this.$papa.download(csvToDowloand, "CSV")
     },
+
     buildStudent(row) {
       return {
         numero: row[0],

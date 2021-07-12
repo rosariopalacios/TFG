@@ -10,13 +10,14 @@
       <modal v-if="showModal" @close="showModal = false" />
       <button id="clear" @click="emptyMap">Limpiar mapa</button>
       <button id="form" @click="continueToForm">Enviar</button>
-      <div class="colorButtons">
+      <div class="colorButtons"   @mouseover="hover = true" @mouseleave="hover = false">
         <button
           v-for="(color, index) in colors"
           v-bind:style="{ 'background-color': color }"
           :key="index"
           @click="clickedColor(color)"
         ></button>
+        <h1 v-if="hover">Haz click en el color que quieras utilizar en cada momento.</h1>
       </div>
       <div class="colorSelected">
         <label> Color seleccionado: </label>
@@ -59,7 +60,8 @@ export default {
       showModal: false,
       colors,
       arrayClicks: [],
-      registro: {}
+      registro: {},
+      hover: false
     }
   },
   methods: {
@@ -168,6 +170,10 @@ export default {
   padding: 0, 5rem 0;
   cursor: pointer;
   margin: 2px;
+}
+
+h1 {
+  font-size: large;
 }
 
 </style>

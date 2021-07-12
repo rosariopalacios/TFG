@@ -1,6 +1,9 @@
 <template>
   <div class="admin">
     <h1>Gestión de Alumnos</h1>
+    <div class="header">
+      <button class="closeSesion" @click="logOut"> Cerrar sesión </button>
+    </div>
     <div class="fileInput">
       <label class="fileLabel"> Subir archivo nuevos alumnos </label>
       <input
@@ -38,6 +41,7 @@
         <td>{{ student.labClass }}</td>
       </tr>
     </table>
+
   </div>
 </template>
 <script>
@@ -172,6 +176,12 @@ export default {
       this.$papa.download(csvToDowloand, "CSV")
     },
 
+    //Method for Login out
+    logOut(){
+      localStorage.removeItem('user')
+      localStorage.removeItem('isAdmin')
+      this.$router.push("/login")
+    },
     buildStudent(row) {
       return {
         numero: row[0],
@@ -245,5 +255,19 @@ csvInput {
   padding: 0, 5rem 0;
   margin: 2px;
   width: 20%;
+  cursor: pointer;
 }
+.closeSesion {
+  background: #00aae4;
+  border: none;
+  color: white;
+  padding: 1rem 0;
+  cursor: pointer;
+  width: 10%;
+}
+.header {
+  width: 60%;
+  margin-left: 80%;
+}
+
 </style>
